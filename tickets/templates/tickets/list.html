@@ -1,0 +1,50 @@
+{% extends 'tickets/base.html' %}
+
+{% block title %}Билеты — AviaClone{% endblock %}
+
+{% block content %}
+<h2 class="text-3xl font-bold text-center text-sky-dark mb-8">
+  Найдите лучшие билеты ✈️
+</h2>
+
+<form method="get" class="flex flex-col md:flex-row gap-4 bg-white shadow-lg rounded-2xl p-6 mb-10 border border-sky-100">
+  <div class="flex-1">
+    <label class="block text-gray-500 text-sm mb-1">Откуда</label>
+    <input type="text" name="origin" value="{{ request.GET.origin }}" placeholder="Введите город"
+      class="w-full px-4 py-2 border border-sky-200 rounded-lg focus:ring-2 focus:ring-sky-400 focus:outline-none">
+  </div>
+
+  <div class="flex-1">
+    <label class="block text-gray-500 text-sm mb-1">Куда</label>
+    <input type="text" name="destination" value="{{ request.GET.destination }}" placeholder="Введите город"
+      class="w-full px-4 py-2 border border-sky-200 rounded-lg focus:ring-2 focus:ring-sky-400 focus:outline-none">
+  </div>
+
+  <div class="flex items-end">
+    <button type="submit"
+      class="bg-sky-dark text-white font-semibold px-6 py-2 rounded-lg hover:bg-sky-500 transition">
+      🔍 Поиск
+    </button>
+  </div>
+</form>
+
+<ul class="space-y-4">
+  {% for t in tickets %}
+  <li class="flex justify-between items-center bg-white p-5 rounded-xl shadow-sm border border-sky-100 hover:shadow-md transition">
+    <div>
+      <p class="text-lg font-semibold text-gray-800">
+        {{ t.origin }} → {{ t.destination }}
+      </p>
+      <p class="text-sm text-gray-500">{{ t.depart_date }}</p>
+    </div>
+    <div class="text-right">
+      <span class="text-xl font-bold text-orange">${{ t.price }}</span>
+    </div>
+  </li>
+  {% empty %}
+  <li class="text-center text-gray-500 py-8 bg-white rounded-xl border border-sky-100 shadow-sm">
+    😔 Билетов не найдено
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

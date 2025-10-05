@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AviaClone{% endblock %}</title>
+
+  <!-- Подключаем TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Настраиваем цвета Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sky: {
+              light: '#E0F7FF',
+              DEFAULT: '#38BDF8',
+              dark: '#0284C7'
+            },
+            orange: {
+              DEFAULT: '#FB923C'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-sky-light min-h-screen flex flex-col font-sans text-gray-800">
+
+  <!-- Навбар -->
+  <header class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold text-sky-dark">✈️ AviaClone</a>
+      <nav class="space-x-6">
+        <a href="{% url 'tickets_list' %}" class="text-gray-700 hover:text-sky-dark font-medium">Билеты</a>
+        {% if user.is_authenticated %}
+          <span class="text-gray-500">Привет, {{ user.username }}!</span>
+          <a href="{% url 'logout' %}" class="text-orange font-medium hover:underline">Выйти</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="text-sky-dark hover:underline">Войти</a>
+          <a href="{% url 'signup' %}" class="bg-sky-dark text-white px-4 py-2 rounded-lg hover:bg-sky-500 transition">Регистрация</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <!-- Контент -->
+  <main class="flex-grow max-w-5xl mx-auto px-6 py-10">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Подвал -->
+  <footer class="bg-white border-t mt-10">
+    <div class="max-w-6xl mx-auto px-6 py-4 text-center text-gray-500 text-sm">
+      © 2025 AviaClone — путешествуй легко 🌤️
+    </div>
+  </footer>
+
+</body>
+</html>

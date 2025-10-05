@@ -1,0 +1,37 @@
+{% extends 'tickets/base.html' %}
+{% block title %}Регистрация — AviaClone{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-8 border border-sky-100">
+  <h2 class="text-2xl font-bold text-center text-sky-dark mb-6">Создать аккаунт</h2>
+
+  <form method="post" class="space-y-4">
+    {% csrf_token %}
+    <div>
+      <label class="block text-gray-600 text-sm mb-1">Имя пользователя</label>
+      <input type="text" name="username" required class="w-full border border-sky-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-400 focus:outline-none">
+    </div>
+    <div>
+      <label class="block text-gray-600 text-sm mb-1">Email</label>
+      <input type="email" name="email" required class="w-full border border-sky-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-400 focus:outline-none">
+    </div>
+    <div>
+      <label class="block text-gray-600 text-sm mb-1">Пароль</label>
+      <input type="password" name="password1" required class="w-full border border-sky-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-400 focus:outline-none">
+    </div>
+    <div>
+      <label class="block text-gray-600 text-sm mb-1">Подтвердите пароль</label>
+      <input type="password" name="password2" required class="w-full border border-sky-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-400 focus:outline-none">
+    </div>
+
+    <button type="submit" class="w-full bg-sky-dark text-white py-2 rounded-lg font-semibold hover:bg-sky-500 transition">
+      Зарегистрироваться
+    </button>
+  </form>
+
+  <p class="text-center text-gray-500 text-sm mt-4">
+    Уже есть аккаунт?
+    <a href="{% url 'login' %}" class="text-sky-dark font-semibold hover:underline">Войти</a>
+  </p>
+</div>
+{% endblock %}
