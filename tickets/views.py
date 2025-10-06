@@ -4,6 +4,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from .forms import SignUpForm
 from .models import Ticket
 from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
+from .models import Ticket
 
 def signup_view(request):
     if request.method == 'POST':
@@ -33,3 +35,8 @@ def tickets_list(request):
             (Q(origin__icontains=q_origin) | Q(destination__icontains=q_dest))
         )
     return render(request, 'tickets/list.html', {'tickets': qs})
+
+
+def ticket_detail(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    return render(request, 'tickets/tickets_detail.html', {'ticket': ticket})

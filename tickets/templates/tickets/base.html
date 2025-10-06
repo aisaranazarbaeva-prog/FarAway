@@ -1,63 +1,107 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}AviaClone{% endblock %}</title>
+    <meta charset="UTF-8">
+    <title>{% block title %}FarAway.kg{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
 
-  <!-- Подключаем TailwindCSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Настраиваем цвета Tailwind -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            sky: {
-              light: '#E0F7FF',
-              DEFAULT: '#38BDF8',
-              dark: '#0284C7'
-            },
-            orange: {
-              DEFAULT: '#FB923C'
-            }
-          }
+        /* Фон баардык беттерге */
+        body {
+            background: linear-gradient(to top, #e0f7ff, #ffffff);
+            min-height: 100vh;
         }
-      }
-    }
-  </script>
+
+        /* Header жана nav эстетикасы */
+        header {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-rounded {
+            border-radius: 50px;
+        }
+
+        .ticket-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        }
+    </style>
 </head>
-<body class="bg-sky-light min-h-screen flex flex-col font-sans text-gray-800">
+<body>
 
-  <!-- Навбар -->
-  <header class="bg-white shadow-md">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="/" class="text-2xl font-bold text-sky-dark">✈️ AviaClone</a>
-      <nav class="space-x-6">
-        <a href="{% url 'tickets_list' %}" class="text-gray-700 hover:text-sky-dark font-medium">Билеты</a>
-        {% if user.is_authenticated %}
-          <span class="text-gray-500">Привет, {{ user.username }}!</span>
-          <a href="{% url 'logout' %}" class="text-orange font-medium hover:underline">Выйти</a>
-        {% else %}
-          <a href="{% url 'login' %}" class="text-sky-dark hover:underline">Войти</a>
-          <a href="{% url 'signup' %}" class="bg-sky-dark text-white px-4 py-2 rounded-lg hover:bg-sky-500 transition">Регистрация</a>
-        {% endif %}
-      </nav>
-    </div>
-  </header>
+<!-- Header -->
+<header class="bg-light shadow-sm mb-4">
+  <div class="container d-flex justify-content-between align-items-center py-3">
+    <!-- Логотип -->
+    <a href="{% url 'tickets_list' %}" class="h4 text-decoration-none text-primary fw-bold">FarAway.kg ✈️</a>
 
-  <!-- Контент -->
-  <main class="flex-grow max-w-5xl mx-auto px-6 py-10">
+    <!-- Навигация -->
+    <nav class="d-flex gap-2 align-items-center">
+      {% if user.is_authenticated %}
+      <span class="fw-bold text-dark">Привет, {{ user.username }}!</span>
+      <form method="post" action="{% url 'logout' %}" class="m-0">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-rounded fw-bold">Выйти</button>
+      </form>
+      {% else %}
+      <a href="{% url 'login' %}" class="btn btn-outline-primary btn-rounded fw-bold">Войти</a>
+      <a href="{% url 'signup' %}" class="btn btn-primary btn-rounded fw-bold">Регистрация</a>
+      {% endif %}
+
+      <!-- Помощь кнопка -->
+      <button type="button" class="btn btn-info btn-rounded fw-bold" data-bs-toggle="modal" data-bs-target="#helpModal">
+        Помощь
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- Main content -->
+<main>
     {% block content %}{% endblock %}
-  </main>
+</main>
 
-  <!-- Подвал -->
-  <footer class="bg-white border-t mt-10">
-    <div class="max-w-6xl mx-auto px-6 py-4 text-center text-gray-500 text-sm">
-      © 2025 AviaClone — путешествуй легко 🌤️
+<!-- Footer -->
+<footer class="bg-light py-3 mt-5 text-center text-muted">
+    © 2025 FarAway.kg — путешествуй легко ✨
+</footer>
+
+<!-- Modal для Помощь -->
+<div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title fw-bold">Помощь</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Email:</strong> support@faraway.kg</p>
+
+        <p><strong>WhatsApp:</strong></p>
+        <ul>
+            <li><a href="https://wa.me/996700123456" target="_blank">+996 709 230 204 (Айжаркын)</a></li>
+            <li><a href="https://wa.me/996701234567" target="_blank">+996 999 011 166 (Айсара)</a></li>
+            <li><a href="https://wa.me/996702345678" target="_blank">+996 504 166 055 (Айдар)</a></li>
+        </ul>
+
+        <p><strong>Телефон:</strong></p>
+        <ul>
+            <li>+996 709 230 204 (Айжаркын)</li>
+            <li>+996 999 011 166 (Айсара)</li>
+            <li>+996 504 166 055 (Айдар)</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-rounded fw-bold" data-bs-dismiss="modal">Закрыть</button>
+      </div>
     </div>
-  </footer>
+  </div>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

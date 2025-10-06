@@ -1,0 +1,69 @@
+
+
+<footer class="bg-light text-center py-3 mt-4">
+    <p>© 2025 FarAway.kg — путешествуй легко ✨</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>{% extends 'tickets/base.html' %}
+{% block title %}Оплата — FarAway.kg{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm p-4 rounded-4">
+    <h3 class="mb-3">{{ ticket.origin }} → {{ ticket.destination }}</h3>
+    <p><strong>Вылет:</strong> {{ ticket.depart_date }}</p>
+    {% if ticket.return_date %}<p><strong>Возврат:</strong> {{ ticket.return_date }}</p>{% endif %}
+    <p><strong>Цена:</strong> ${{ ticket.price }}</p>
+
+    <!-- Форма оплаты -->
+    <form id="paymentForm" class="mt-4">
+      <div class="mb-3">
+        <label class="form-label">Номер карты</label>
+        <input type="text" class="form-control" placeholder="0000 0000 0000 0000" required>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <label class="form-label">MM/YY</label>
+          <input type="text" class="form-control" placeholder="MM/YY" required>
+        </div>
+        <div class="col">
+          <label class="form-label">CVV</label>
+          <input type="text" class="form-control" placeholder="CVV" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success w-100 rounded-pill">Оплатить</button>
+      <button type="button" class="btn btn-secondary w-100 rounded-pill mt-2" data-bs-dismiss="modal" onclick="window.history.back()">Отмена</button>
+    </form>
+
+    <!-- Success Animation -->
+    <div id="successAnimation" class="d-none text-center mt-4">
+      <div class="checkmark mb-2">&#10004;</div>
+      <p class="fw-bold text-success">Оплата прошла успешно!</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.checkmark {
+  font-size: 60px;
+  color: green;
+  animation: pop 0.5s ease forwards;
+}
+@keyframes pop {
+  0% { transform: scale(0); opacity:0; }
+  70% { transform: scale(1.3); opacity:1; }
+  100% { transform: scale(1); }
+}
+</style>
+
+<script>
+document.getElementById('paymentForm').addEventListener('submit', function(e){
+    e.preventDefault(); // реальное подключение к платежам пока нет
+    this.style.display = 'none'; // скрываем форму после оплаты
+    document.getElementById('successAnimation').classList.remove('d-none'); // показываем зелёный тик
+});
+</script>
+{% endblock %}

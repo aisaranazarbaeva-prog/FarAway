@@ -1,29 +1,75 @@
-{% extends 'tickets/base.html' %}
-{% block title %}Вход — AviaClone{% endblock %}
-
-{% block content %}
-<div class="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-8 border border-sky-100">
-  <h2 class="text-2xl font-bold text-center text-sky-dark mb-6">Вход в аккаунт</h2>
-
-  <form method="post" class="space-y-4">
-    {% csrf_token %}
-    <div>
-      <label class="block text-gray-600 text-sm mb-1">Имя пользователя</label>
-      <input type="text" name="username" required class="w-full border border-sky-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-400 focus:outline-none">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <style>
+        body {
+            background-color: #e6f2ff;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #0077cc;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            color: #333;
+        }
+        input {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .register-link a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Вход</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Войти</button>
+    </form>
+    <div class="register-link">
+        Нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь</a>
     </div>
-    <div>
-      <label class="block text-gray-600 text-sm mb-1">Пароль</label>
-      <input type="password" name="password" required class="w-full border border-sky-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-400 focus:outline-none">
-    </div>
-
-    <button type="submit" class="w-full bg-sky-dark text-white py-2 rounded-lg font-semibold hover:bg-sky-500 transition">
-      Войти
-    </button>
-  </form>
-
-  <p class="text-center text-gray-500 text-sm mt-4">
-    Нет аккаунта?
-    <a href="{% url 'signup' %}" class="text-sky-dark font-semibold hover:underline">Зарегистрируйтесь</a>
-  </p>
 </div>
-{% endblock %}
+</body>
+</html>
